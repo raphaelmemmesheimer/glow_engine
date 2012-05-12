@@ -1,0 +1,36 @@
+/*
+ * MidiController.cpp
+ *
+ *  Created on: Aug 27, 2011
+ *      Author: raphael
+ */
+
+#include "MidiController.h"
+
+MidiController::MidiController(int port) {
+	std::vector<unsigned char> message;
+
+	// RtMidiIn constructor
+	try {
+		midiIn = new RtMidiIn();
+	}
+	catch ( RtError &error ) {
+		error.printMessage();
+		//exit( EXIT_FAILURE );
+	}
+
+	try {
+		midiIn->openPort(port);
+	}
+	catch ( RtError &error ) {
+		error.printMessage();
+	}
+	// Don't ignore sysex, timing, or active sensing messages.
+	midiIn->ignoreTypes( false, false, false );
+
+}
+
+MidiController::~MidiController() {
+	// TODO Auto-generated destructor stub
+}
+

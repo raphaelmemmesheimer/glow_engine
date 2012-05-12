@@ -1,0 +1,21 @@
+/*
+ * MidiController.h
+ *
+ *  Created on: Aug 27, 2011
+ *      Author: raphael
+ */
+
+#ifndef MIDICONTROLLER_H_
+#define MIDICONTROLLER_H_
+
+#include "../../3rdParty/rtmidi/RtMidi.h"
+
+class MidiController {
+private:
+	RtMidiIn* midiIn;
+public:
+	MidiController(int port);
+	virtual ~MidiController();
+};
+
+#endif /* MIDICONTROLLER_H_ */
