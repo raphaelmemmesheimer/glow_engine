@@ -1,29 +1,23 @@
-/*
- * SibenikScene.h
- *
- *  Created on: Jan 30, 2012
- *      Author: raphael
- */
+#ifndef SHADOWMAPSCENE_H
 
-#ifndef SIBENIKSCENE_H_
-#define SIBENIKSCENE_H_
-
+#define SHADOWMAPSCENE_H
 #include "../System/Scene.h"
 #include <glm/glm.hpp>
-#include "../System/ObjModel.h"
+#include "../System/CTMModel.h"
 #include "../System/AssimpModel.h"
 #include "../Shapes/Quad.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-class SibenikScene: public Scene {
+class ShadowMapScene : public Scene {
 	glm::mat4 projection;
 	glm::mat4 modelview;
 
 	Quad* quad;
 	Mesh* model;
 public:
-	SibenikScene();
-	virtual ~SibenikScene();
+	ShadowMapScene();
+	virtual ~ShadowMapScene();
+
 	void init();
 	void draw();
 	void resize(int width, int height);
@@ -35,4 +29,5 @@ public:
 	void handleKeyboard(int key, int action);
 };
 
-#endif /* SIBENIKSCENE_H_ */
+
+#endif /* end of include guard: SHADOWMAPSCENE_H */

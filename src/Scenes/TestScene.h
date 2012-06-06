@@ -1,9 +1,7 @@
-/*
- * TestScene.h
- *
- *  Created on: Dec 27, 2011
- *      Author: raphael
- */
+ //TestScene.h
+
+  //Created on: Dec 27, 2011
+	  //Author: raphael
 
 #ifndef TESTSCENE_H_
 #define TESTSCENE_H_
@@ -26,14 +24,14 @@
 #include "../Shapes/Cube.h"
 #include "../System/ParticleSystem.h"
 #include "../System/Text.h"
-#include "../System/Skybox.h"
+//#include "../System/Skybox.h"
 #include "../System/FrameBufferObject.h"
 #include "../System/Audio.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#define DRAWANIMATEDHORSE
+//#define DRAWANIMATEDHORSE
 #define ENABLE_SHADOW
 
 enum ChannelArt {caDefault, caRed, caCyan};
@@ -42,7 +40,7 @@ class TestScene : public Scene {
 	ObjModel* obj;
 	CTMModel* ctm;
 	Text* text;
-	Skybox* skybox;
+	//Skybox* skybox;
 
 	FrameBufferObject* fbo;
 	FrameBufferObject* fboRed;
@@ -131,6 +129,7 @@ public:
 	void draw();
 	void update();
 	virtual ~TestScene();
+	void setLightPos(float x, float y, float z);
 
     void resize(int height, int width);
 };

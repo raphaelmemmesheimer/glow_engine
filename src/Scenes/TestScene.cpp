@@ -169,7 +169,7 @@ TestScene::TestScene() {
 	ambientRed, ambientGreen, ambientBlue = 0.005;
 	shininess = 8;
 
-	lightPos = glm::vec4(3, 3, 30, 0);
+	lightPos = glm::vec4(20, 20, 0, 0);
 	camInitPos = glm::vec3(100, 100, 0);
 }
 
@@ -180,7 +180,7 @@ TestScene::~TestScene() {
 void TestScene::initCamera()
 {
 	cameraManager.addCamera(new Camera("TrackballCamera"));
-	cameraManager["TrackballCamera"]->setZ(20.0);
+	cameraManager["TrackballCamera"]->setZ(60.0);
 	cameraManager["TrackballCamera"]->setMode(cmTrackball);
 
 	cameraManager.addCamera(new Camera("EgoCamera"));
@@ -229,7 +229,11 @@ void TestScene::initShader()
 }
 
 void TestScene::drawScene(Shader* shader, Camera* camera, ChannelArt channel) {
-//#ifdef USEWX
+	cameraManager["LightCamera"]->setPos(light.getLightPos());
+	printf("lightPos %f %f %f \n", light.getLightPos()[0], light.getLightPos().y, light.getLightPos().z);
+	//#ifdef USEWX
+	//
+//
 		//models = engine->getMainWindow()->getModels(); TODO: change
 		//printf("%d modelscnt\n", models.size());
 //#endif
@@ -258,7 +262,7 @@ void TestScene::drawScene(Shader* shader, Camera* camera, ChannelArt channel) {
     glUniformMatrix3fv(shader->getUniformLocation("NormalMatrix"), 1,0, &normMatrix[0][0]);
 
 
-    glUniform3f(shader->getUniformLocation("LightPosition"),lightPos[0],lightPos[1],lightPos[2]); //light at constant position
+  glUniform3f(shader->getUniformLocation("LightPosition"),lightPos[0],lightPos[1],lightPos[2]); //light at constant position
     glUniform3f(shader->getUniformLocation("LightPosition"), cameraManager["TrackballCamera"]->getX(), cameraManager["TrackballCamera"]->getY(), cameraManager["TrackballCamera"]->getZ()); // light at cam
 
     glUniform3f(shader->getUniformLocation("AmbientMaterial"), ambientRed,ambientGreen,ambientBlue);
@@ -380,7 +384,7 @@ void TestScene::init(){
 
     ctm = new CTMModel();
     ctm->setAutoCalcNormals(true);
-    ctm->loadFile("/home/raphael/models/ctm/Armadillo.ctm");
+    ctm->loadFile("/home/raphael/models/ctm/torus.ctm");
     cube = new Cube();
 //
 //    ply = new PlyModel();
@@ -408,7 +412,8 @@ void TestScene::init(){
 
     particleSystem = new ParticleSystem(1000);
 
-    text = new Text("1234 font rendering", "data/fonts/cubic.ttf");
+    text = new Text("airglow!\n if that works i eat ma underpants", "data/fonts/stitches.ttf");
+	text->setPos(100, 200);
 }
 
 void TestScene::draw(){
@@ -421,7 +426,7 @@ void TestScene::draw(){
     #ifdef ENABLE_FSFBO
 	fbo->bind();
     #endif
-	glClearColor(0.0,0.0,1.0,1.0);
+	glClearColor(1.0,1.0,1.0,1.0);
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
     angleX += 0.01;
@@ -438,7 +443,10 @@ void TestScene::draw(){
 	engine->getMainWindow()->eLightSize->GetValue().ToDouble(&lightScale);
 #endif
     Modelview = glm::scale(glm::mat4(1.0),glm::vec3(lightScale));
-	Modelview = glm::translate(Modelview,glm::vec3(lightPos[0],lightPos[1],lightPos[2]));//    NormalMatrix = Modelview.getUpper3x3();
+	//light.lightPos
+	//Modelview = glm::translate(Modelview,glm::vec3(lightPos[0],lightPos[1],lightPos[2]));//    NormalMatrix = Modelview.getUpper3x3();
+	
+	Modelview = glm::translate(Modelview,light.getLightPos());//    NormalMatrix = Modelview.getUpper3x3();
 	Modelview = cameraManager.getActiveCamera()->getCameraMatrix() * Modelview; //*Modelview
 	glUniformMatrix4fv(engine->resourceManager.shaderManager["NoLight"]->getUniformLocation("Modelview"), 1, 0,&Modelview[0][0]);
 	glUniformMatrix4fv(engine->resourceManager.shaderManager["NoLight"]->getUniformLocation("Projection"), 1,0, &ProjectionMatrix[0][0]);
@@ -481,34 +489,33 @@ void TestScene::draw(){
 	Modelview = glm::mat4(1.0);
 	Modelview = cameraManager.getActiveCamera()->getCameraMatrix() * Modelview;
 
-	engine->resourceManager.shaderManager["Texture"]->bind();
-    Modelview = glm::translate(glm::mat4(1.0),glm::vec3(0.0));
-	Modelview = glm::rotate(Modelview,glm::degrees(90.0f),glm::vec3(0.0,1.0,0.0));
-	Modelview = cameraManager.getActiveCamera()->getCameraMatrix() * Modelview;
+	//engine->resourceManager.shaderManager["Texture"]->bind();
+		//Modelview = glm::translate(glm::mat4(1.0),glm::vec3(0.0));
+		//Modelview = glm::rotate(Modelview,glm::degrees(90.0f),glm::vec3(0.0,1.0,0.0));
+		//Modelview = cameraManager.getActiveCamera()->getCameraMatrix() * Modelview;
 
-	glUniformMatrix4fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("Projection"), 1,0, &ProjectionMatrix[0][0]);
-	glUniformMatrix4fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("Modelview"), 1, 0,&Modelview[0][0]);
-	glUniformMatrix3fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("NormalMatrix"), 1,0, &normMatrix[0][0]);
-    skybox->draw();
+		//glUniformMatrix4fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("Projection"), 1,0, &ProjectionMatrix[0][0]);
+		//glUniformMatrix4fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("Modelview"), 1, 0,&Modelview[0][0]);
+		//glUniformMatrix3fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("NormalMatrix"), 1,0, &normMatrix[0][0]);
+		//skybox->draw();
 
-    engine->resourceManager.shaderManager["Texture"]->unbind();
+	//engine->resourceManager.shaderManager["Texture"]->unbind();
 
 
-    engine->resourceManager.shaderManager["Texture"]->bind();
-        Modelview = glm::translate(glm::mat4(1.0),glm::vec3(0.0,0.0,0.0));
-    	Modelview = glm::rotate(Modelview,glm::degrees(90.0f),glm::vec3(0.0,1.0,0.0));
-    	Modelview = cameraManager.getActiveCamera()->getCameraMatrix() * Modelview;
-    	Quad* q1 = new Quad(2.0);
+    //engine->resourceManager.shaderManager["Texture"]->bind();
+        //Modelview = glm::translate(glm::mat4(1.0),glm::vec3(0.0,0.0,0.0));
+        //Modelview = glm::rotate(Modelview,glm::degrees(90.0f),glm::vec3(0.0,1.0,0.0));
+        //Modelview = cameraManager.getActiveCamera()->getCameraMatrix() * Modelview;
+        //Quad* q1 = new Quad(2.0);
 
-    	glm::mat4 orthoproj;
-    	orthoproj = glm::ortho( 0, 1, 1, 0);
-    	glUniformMatrix4fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("Projection"), 1,0, &orthoproj[0][0]);
-    	glUniformMatrix4fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("Modelview"), 1, 0,&glm::mat4(1.0)[0][0]);
-    	glUniformMatrix3fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("NormalMatrix"), 1,0, &normMatrix[0][0]);
-    	text->setText("hallo");
-    	//q1->draw();
-
-    engine->resourceManager.shaderManager["Texture"]->unbind();
+        //glm::mat4 orthoproj;
+        //orthoproj = glm::ortho( 0, 1, 1, 0);
+        //glUniformMatrix4fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("Projection"), 1,0, &orthoproj[0][0]);
+        //glUniformMatrix4fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("Modelview"), 1, 0,&glm::mat4(1.0)[0][0]);
+        //glUniformMatrix3fv(engine->resourceManager.shaderManager["Texture"]->getUniformLocation("NormalMatrix"), 1,0, &normMatrix[0][0]);
+		////text->setText("gagagugaga");
+		//text->draw();
+    //engine->resourceManager.shaderManager["Texture"]->unbind();
 
 
 
@@ -601,7 +608,7 @@ void TestScene::draw(){
     glm::mat4 shadowMapBiasMatrix = glm::scale(glm::mat4(1.0),glm::vec3(0.5));
     shadowMapBiasMatrix = glm::translate(shadowMapBiasMatrix,glm::vec3(0.5));
     glm::mat4 lightProjectionMatrix = glm::perspective(60.0f,1.0f,0.1f,100.0f);
-    glm::mat4 lightLookAtMatrix = cameraManager["TrackballCamera"]->getStaticMatrix();
+    glm::mat4 lightLookAtMatrix = cameraManager["LightCamera"]->getStaticMatrix();
     glUniformMatrix4fv(engine->resourceManager.shaderManager["ShadowMap"]->getUniformLocation("ShadowMapBias"), 1,0, &shadowMapBiasMatrix[0][0]);
     glUniformMatrix4fv(engine->resourceManager.shaderManager["ShadowMap"]->getUniformLocation("LightProjectionMatrix"), 1,0, &lightProjectionMatrix[0][0]);
     glUniformMatrix4fv(engine->resourceManager.shaderManager["ShadowMap"]->getUniformLocation("LightLookAtMatrix"), 1,0, &lightLookAtMatrix[0][0]);
@@ -646,4 +653,10 @@ void TestScene::update() {
 		deltaTimeHorse = engine->getTime();
 	}	
 #endif
+}
+
+void TestScene::setLightPos(float x, float y, float z) {
+	lightPos[0] = x;
+	lightPos[1] = y;
+	lightPos[2] = z;
 }

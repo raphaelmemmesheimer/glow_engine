@@ -28,9 +28,10 @@ void SibenikScene::init()
 	engine->getMainWindow()->getShaderEditor()->setShaderManager(engine->resourceManager.shaderManager);
 #endif
 	quad = new Quad(0.2);
-	model = new ObjModel();
+	model = new AssimpModel();
 	model->setAutoCalcNormals(true);
-	model->loadFile("/home/raphael/models/obj/sibenik/sibenik.obj");
+	model->loadFile("/home/raphael/code/src/liblub/media/meshes/monkey.blend");
+	//model->loadFile("/home/raphael/models/obj/sibenik/sibenik.max");
 
 	glEnable(GL_DEPTH_TEST);
 	//cameraManager = new CameraManager();
