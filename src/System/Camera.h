@@ -58,6 +58,7 @@ public:
     void setX(GLfloat x);
     void setY(GLfloat y);
     void setZ(GLfloat z);
+	void setPos(glm::vec3 pos);
     GLfloat getSpeed() const;
     ViewDirection getViewDirection() const;
     void setSpeed(GLfloat speed);

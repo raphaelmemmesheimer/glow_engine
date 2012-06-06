@@ -9,6 +9,7 @@
 
 Scene::Scene() {
 	// TODO Auto-generated constructor stub
+	//this->skybox = new Skybox();
 
 }
 
@@ -56,6 +57,10 @@ void Scene::setEngine(Engine *engine)
     this->engine = engine;
 }
 
+//void Scene::setSkybox(Skybox* skybox) {
+	//this->skybox = skybox;
+//}
+
 
 TiXmlElement * Scene::getSceneAsXmlElement() {
     TiXmlElement * element = new TiXmlElement("Scene"); 
@@ -67,3 +72,16 @@ TiXmlElement * Scene::getSceneAsXmlElement() {
 SceneGraph Scene::getSceneGraph() {
 	return sceneGraph;
 }
+
+
+//void Scene::setLight(Light light) {
+	//this->light = light;
+//}
+
+//Light Scene::getLight() {
+	//return this->light;
+//}
+
+//void Scene::setLight(Light light) {
+	//this->light = light;
+//}

@@ -28,7 +28,7 @@ glm::vec4 Light::getLightColor() const
     return lightColor;
 }
 
-glm::vec3 Light::getLightPos() const
+glm::vec3 Light::getLightPos() 
 {
     return lightPos;
 }
@@ -45,7 +45,15 @@ void Light::setLightColor(glm::vec4 lightColor)
 
 void Light::setLightPos(glm::vec3 lightPos)
 {
+	printf("%f %f %f\n", this->lightPos[0], this->lightPos[1], this->lightPos[2]);
+	printf("%f %f %f\n", lightPos[0], lightPos[1], lightPos[2]);
+	printf("%f %f %f\n", getLightPos()[0], getLightPos()[1], getLightPos()[2]);
     this->lightPos = lightPos;
+	printf("%f %f %f\n", this->lightPos[0], this->lightPos[1], this->lightPos[2]);
+	printf("%f %f %f\n", lightPos[0], lightPos[1], lightPos[2]);
+
+
+	printf("%f %f %f\n", getLightPos()[0], getLightPos()[1], getLightPos()[2]);
 }
 
 

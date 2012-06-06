@@ -4,6 +4,7 @@
 
 #include "TextureManager.h"
 #include "ShaderManager.h"
+//#include "SceneManager.h"
 
 class ResourceManager 
 {
@@ -14,6 +15,7 @@ public:
 	//ShaderManager getShaderManager();
 	TextureManager textureManager;
 	ShaderManager shaderManager;
+	//SceneManager sceneManager;
 private:
 	
 };

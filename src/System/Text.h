@@ -31,13 +31,12 @@ public:
 };
 
 class Text {
-
-
-
 	std::string mText;
 	float mPosX;
 	float mPosY;
 	unsigned char mtemp_bitmap[512*512];
+
+	stbtt_bakedchar g_cdata[96]; // ASCII 32..126 is 95 glyphs
 
 	unsigned char * mBitmap;
 	char ttfBuffer[1<<20];
@@ -53,6 +52,8 @@ public:
     void setText(std::string text);
     std::string getFontName() const;
     void setFontName(std::string fontName);
+	void setPos(float posX, float posY);
+	void draw();
 };
 
 #endif /* TEXT_H_ */

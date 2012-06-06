@@ -13,6 +13,8 @@
 #include "CameraManager.h"
 #include "../3rdParty/tinyxml/tinyxml.h"
 #include "SceneGraph.h"
+#include "Skybox.h"
+#include "Light.h"
 
 class Scene {
 	int startTime; // time in ms
@@ -22,7 +24,10 @@ protected:
 	std::string name;
 	SceneGraph sceneGraph;
 	std::string description; // to print help infos on screen
+	Skybox* skybox;
+	float cameraMoveSpeed;
 public:
+	Light light;
 	int tmpMousePos; // do private or so
 	Scene();
 	virtual ~Scene();
@@ -46,6 +51,9 @@ public:
     void setName(std::string name);
 	SceneGraph getSceneGraph();
     Engine* engine;
+	//void setSkybox(Skybox* skybox);
+	//Light getLight(); //TODO multiple Lights per Scene
+	//void setLight(Light light);
 };
 
 #endif /* SCENE_H_ */

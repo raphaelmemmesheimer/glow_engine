@@ -36,7 +36,7 @@
 
 using namespace std;
 
-class SceneManager;
+//class SceneManager;
 //class Demo;
 
 
@@ -87,8 +87,6 @@ public:
     int getLastMouseY() const;
     void setLastMouseX(int lastMouseX);
     void setLastMouseY(int lastMouseY);
-    //ShaderManager shaderManager;
-    //TextureManager textureManager;
 	ResourceManager resourceManager;
 };
 

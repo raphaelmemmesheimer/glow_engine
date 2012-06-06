@@ -251,3 +251,9 @@ glm::mat4 Camera::getCameraMatrix(){
 	}
 	return getEgoMatrix();
 }
+
+void Camera::setPos(glm::vec3 pos) {
+	this->x = pos.x;
+	this->y = pos.y;
+	this->z = pos.z;
+}

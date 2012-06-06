@@ -28,7 +28,7 @@ void Engine::init(int width, int height) {
 
 	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR,4); //set up opengl 3.3 context
 	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR,1);
-	glfwOpenWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
+	//glfwOpenWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
 
 //
 
